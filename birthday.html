@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Puspa 💕</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base Styles ─── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; width: 100%; overflow: hidden; background: #000; }
+    body { font-family: 'Quicksand', sans-serif; }
+    .font-script { font-family: 'Dancing Script', cursive; }
+
+    /* ─── Animated Gradient Background ─── */
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-bg {
+      background: linear-gradient(-45deg, #ffc0cb, #ff85a2, #ffb6d9, #f8a4c8, #ffd1dc, #ff69b4);
+      background-size: 400% 400%;
+      animation: bgShift 15s ease infinite;
+    }
+
+    /* ─── Floating Orbs (Depth Effect) ─── */
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25%      { transform: translate(30px, -40px) scale(1.1); }
+      50%      { transform: translate(-20px, -80px) scale(0.95); }
+      75%      { transform: translate(40px, -30px) scale(1.05); }
+    }
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(-40px, -60px) scale(1.08); }
+      66%      { transform: translate(30px, -40px) scale(0.92); }
+    }
+    @keyframes orbFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%      { transform: translate(50px, -70px) scale(1.15); }
+    }
+    .orb {
+      position: fixed; border-radius: 50%; pointer-events: none;
+      filter: blur(60px); opacity: 0.35; will-change: transform;
+    }
+    .orb-1 { width: 300px; height: 300px; background: #ff1493; top: 10%; left: -5%; animation: orbFloat1 12s ease-in-out infinite; }
+    .orb-2 { width: 250px; height: 250px; background: #ffb6d9; top: 50%; right: -8%; animation: orbFloat2 15s ease-in-out infinite; }
+    .orb-3 { width: 200px; height: 200px; background: #ffd1dc; bottom: 5%; left: 30%; animation: orbFloat3 10s ease-in-out infinite; }
+
+    /* ─── Balloon Animations ─── */
+    @keyframes balloonFloat {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      5%   { opacity: 0.85; }
+      50%  { transform: translateY(-60vh) rotate(5deg); }
+      95%  { opacity: 0.85; }
+      100% { transform: translateY(-120vh) rotate(-5deg); opacity: 0; }
+    }
+    .animate-balloon {
+      animation: balloonFloat var(--dur) ease-in infinite;
+      animation-delay: var(--del);
+      opacity: 0;
+    }
+
+    /* ─── Confetti Animations ─── */
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+    }
+    .animate-confetti-fall {
+      animation: confettiFall var(--dur) linear forwards;
+      animation-delay: var(--del);
+    }
+
+    /* ─── Sparkle Animations ─── */
+    @keyframes sparkleAnim {
+      0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+      50%      { opacity: 1; transform: scale(1.2) rotate(180deg); }
+    }
+    .animate-sparkle { animation: sparkleAnim var(--dur) ease-in-out infinite; animation-delay: var(--del); }
+
+    /* ─── Floating Hearts ─── */
+    @keyframes heartFloat {
+      0%   { transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.7; }
+      50%  { transform: translateY(-40vh) translateX(var(--drift)) scale(1) rotate(var(--rot)); }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(-80vh) translateX(calc(var(--drift) * -0.5)) scale(0.6) rotate(calc(var(--rot) * 2)); opacity: 0; }
+    }
+    .animate-heart-float {
+      animation: heartFloat var(--dur) ease-in-out infinite;
+      animation-delay: var(--del);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Click Burst Animations (NEW: Lucu & Interaktif) ─── */
+    @keyframes burstPop {
+      0% { transform: translate(0, 0) scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(360deg); opacity: 0; }
+    }
+    .burst-emoji {
+      position: fixed;
+      pointer-events: none;
+      font-size: 2rem;
+      animation: burstPop 0.8s ease-out forwards;
+      z-index: 100;
+    }
+
+    /* ─── Wiggle Animation (NEW: Foto Gemoy) ─── */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg) scale(1.02); }
+      75% { transform: rotate(5deg) scale(1.02); }
+    }
+    .animate-wiggle { animation: wiggle 0.4s ease-in-out; }
+
+    /* ─── Welcome Screen Specifics ─── */
+    @keyframes welcomeBounce {
+      0%, 100% { transform: translateY(0); }
+      20%      { transform: translateY(-30px); }
+      40%      { transform: translateY(-15px); }
+      60%      { transform: translateY(-22px); }
+      80%      { transform: translateY(-8px); }
+    }
+    .animate-welcome-bounce { animation: welcomeBounce 2s ease-in-out infinite; }
+
+    @keyframes floatSubtitle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .animate-float-subtitle { animation: floatSubtitle 3s ease-in-out infinite; }
+
+    @keyframes boxPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+      50%      { transform: scale(1.03); box-shadow: 0 0 25px 8px rgba(255,255,255,0.15); }
+    }
+    .animate-box-pulse { animation: boxPulse 2s ease-in-out infinite; }
+
+    @keyframes arrowRight { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+    @keyframes arrowLeft  { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-8px); } }
+    .animate-arrow-right { animation: arrowRight 1s ease-in-out infinite; }
+    .animate-arrow-left  { animation: arrowLeft 1s ease-in-out infinite; }
+    @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .animate-pulse-text { animation: pulseText 2s ease-in-out infinite; }
+
+    /* ─── Countdown Screen (Update: Fix Leg Issue) ─── */
+    @keyframes countdownPulse {
+      0%   { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+      50%  { transform: scale(1.2) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .animate-countdown-pulse { animation: countdownPulse 0.8s ease-out forwards; }
+    
+    .countdown-container {
+      max-height: 85vh; /* Batasi tinggi maksimal agar tidak kelebihan */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      text-align: center;
+    }
+    
+    .countdown-number {
+      /* Menggunakan Viewport Height agar responsif di semua HP */
+      font-size: 22vh; 
+      line-height: 1;
+      font-weight: bold;
+      color: white;
+      text-shadow: 5px 5px 15px rgba(0,0,0,0.3), 0 0 40px rgba(255,105,180,0.8);
+      will-change: transform;
+    }
+    
+    .countdown-label {
+      font-size: 5vh;
+      color: white;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    }
+
+    /* ─── Slide Content Animations ─── */
+    @keyframes fadeInContent { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in-content { animation: fadeInContent 1s ease-out forwards; }
+
+    @keyframes emojiFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    .animate-emoji-float { animation: emojiFloat 2.5s ease-in-out infinite; }
+
+    @keyframes bounceIn {
+      0%   { transform: scale(0); opacity: 0; }
+      50%  { transform: scale(1.15); }
+      70%  { transform: scale(0.95); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-bounce-in { animation: bounceIn 0.8s ease-out forwards; }
+
+    @keyframes slideInName { 0% { transform: translateX(-60px); opacity: 0; } 100% { transform: translateX(0); } }
+    .animate-slide-in-name { animation: slideInName 0.8s ease-out 0.3s forwards; opacity: 0; }
+
+    @keyframes birthdate { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); } }
+    .animate-birthdate { animation: birthdate 0.6s ease-out 0.6s forwards; opacity: 0; }
+
+    @keyframes touchingMsg { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .animate-touching-msg { animation: touchingMsg 0.6s ease-out 0.9s forwards; opacity: 0; }
+
+    @keyframes messageSlide { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    .animate-message-slide { animation: messageSlide 0.8s ease-out 1.2s forwards; opacity: 0; }
+
+    @keyframes fadeSlideIn { 0% { opacity: 0; transform: translateX(60px); } 100% { opacity: 1; transform: translateX(0); } }
+    .animate-fade-slide-in { animation: fadeSlideIn 0.7s ease-out forwards; }
+
+    @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+    .animate-fade-slide-up { animation: fadeSlideUp 0.7s ease-out forwards; }
+
+    @keyframes wishButton { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    .animate-wish-button { animation: wishButton 0.5s ease-out 2.2s forwards; opacity: 0; }
+
+    @keyframes lanjutBtn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+    .animate-lanjut-btn { animation: lanjutBtn 0.5s ease-out 2.6s forwards; opacity: 0; }
+
+    @keyframes arrowBounceRight { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+    @keyframes arrowBounceLeft  { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-6px); } }
+    .animate-arrow-bounce      { animation: arrowBounceRight 1.2s ease-in-out infinite; }
+    .animate-arrow-bounce-left { animation: arrowBounceLeft 1.2s ease-in-out infinite; }
+
+    /* ─── Train / Gallery Scroll ─── */
+    @keyframes trainScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .train-track { display: flex; width: max-content; animation: trainScroll 60s linear infinite; }
+    .train-track:hover { animation-play-state: paused; }
+    
+    /* Kereta Kedua (Reverse & Lebih Lambat) */
+    @keyframes trainScrollReverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+    .train-track-reverse { display: flex; width: max-content; animation: trainScrollReverse 80s linear infinite; }
+    .train-track-reverse:hover { animation-play-state: paused; }
+
+    .train-item {
+      flex-shrink: 0; margin: 0 8px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease; background: rgba(0,0,0,0.2);
+    }
+    .train-item:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 8px 25px rgba(255,20,147,0.4), 0 0 0 3px rgba(255,255,255,0.5); }
+
+    /* ─── Staggered List Items ─── */
+    @keyframes wishFadeUp { 0% { opacity: 0; transform: translateY(25px); } 100% { opacity: 1; transform: translateY(0); } }
+    .wish-stagger { animation: wishFadeUp 0.6s ease-out forwards; opacity: 0; }
+
+    @keyframes finalFadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    .final-stagger { animation: finalFadeUp 0.7s ease-out forwards; opacity: 0; }
+
+    /* ─── Photo Mem ─── */
+    .photo-mem {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease; background: rgba(0,0,0,0.3);
+    }
+    .photo-mem:hover { transform: scale(1.04); box-shadow: 0 10px 35px rgba(255,20,147,0.4), 0 0 0 4px rgba(255,255,255,0.5); }
+
+    /* ─── Text Glow Effects ─── */
+    @keyframes heartbeatGlow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255,105,180,0.8), 1px 1px 4px rgba(0,0,0,0.3); }
+      50%      { text-shadow: 0 0 40px rgba(255,105,180,1), 0 0 60px rgba(255,20,147,0.6), 1px 1px 4px rgba(0,0,0,0.3); }
+    }
+    .animate-heartbeat-glow { animation: heartbeatGlow 2.5s ease-in-out infinite; }
+
+    /* ─── Slider Mechanics ─── */
+    .slider-track { display: flex; width: 400%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+    .slider-track.at-1 { transform: translateX(0); }
+    .slider-track.at-2 { transform: translateX(-25%); }
+    .slider-track.at-3 { transform: translateX(-50%); }
+    .slider-track.at-4 { transform: translateX(-75%); }
+    .slide-page { width: 25%; height: 100%; overflow-y: auto; flex-shrink: 0; position: relative; }
+    .slide-page::-webkit-scrollbar { width: 4px; }
+    .slide-page::-webkit-scrollbar-track { background: transparent; }
+    .slide-page::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+    /* ─── Pagination Dots ─── */
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: all 0.3s ease; cursor: pointer; }
+    .dot.active { background: #fff; width: 28px; border-radius: 5px; box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+    .dot:hover:not(.active) { background: rgba(255,255,255,0.7); transform: scale(1.2); }
+
+    /* ─── Poem Lines ─── */
+    .line-poem { margin-bottom: 0.25rem; }
+    .line-poem.indent { padding-left: 1.5rem; }
+    .line-poem.gap-before { margin-top: 0.85rem; }
+    .line-poem.gap-after { margin-bottom: 0.85rem; }
+
+    /* ─── Photo Fallback ─── */
+    .img-fallback {
+      width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.6); font-size: 0.8rem; text-align: center; padding: 5px;
+    }
+
+    /* ─── Music Button ─── */
+    @keyframes musicSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .music-spin { animation: musicSpin 3s linear infinite; }
+    .music-paused { animation-play-state: paused; }
+
+    /* ─── Grand Finale Burst ─── */
+    @keyframes grandBurst {
+      0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+      30%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
+      60%  { transform: scale(0.95) rotate(-5deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .animate-grand-burst { animation: grandBurst 1.2s ease-out forwards; }
+
+    /* ─── Photo Frame Shimmer ─── */
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .photo-frame-shimmer {
+      position: relative;
+    }
+    .photo-frame-shimmer::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 20px; z-index: -1;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    // Data dan Konstanta
+    const PHOTO_URL = "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100039725/fa278f3c-daf4-48.jpeg";
+    const FIRST_MEET_PHOTO = "puspet2.jpeg";
+    const GALLERY_PHOTOS = [
+      "puspet4.jpeg", "puspet.jpeg", "puspet5.jpeg", "puspet6.jpeg",
+      "puspet11.jpeg", "puspet12.jpeg", "puspet13.jpeg", "puspet14.jpeg", "puspet15.jpeg", "puspet16.jpeg",
+      "puspet17.jpeg", "puspet18.jpeg", "puspet19.jpeg", "puspet20.jpeg", "puspet21.jpeg", "puspet22.jpeg", "puspet23.jpeg", "puspet24.jpeg", "puspet25.jpeg"
+    ];
+    const PHOTOBOTH_PHOTOS = ["puspet7.jpeg", "puspet8.jpeg", "puspet9.jpeg", "puspet10.jpeg"];
+
+    const MUSIC_FILE_URL = "./musikulangtahun.mpeg";
+
+    const BALLOON_COLORS = [
+      "linear-gradient(135deg, #ff69b4, #ff1493)",
+      "linear-gradient(135deg, #ffb6d9, #ffc0cb)",
+      "linear-gradient(135deg, #ffd700, #ffaa00)",
+      "linear-gradient(135deg, #ff69b4, #ffb6d9)",
+      "linear-gradient(135deg, #fff, #ffc0cb)",
+      "linear-gradient(135deg, #ffc0cb, #ff1493)",
+      "linear-gradient(135deg, #ff85a2, #ffd1dc)",
+      "linear-gradient(135deg, #ff1493, #ffb6d9)",
+      "linear-gradient(135deg, #ffd700, #ff69b4)",
+    ];
+
+    const BALLOON_CONFIGS = [
+      { left: 8,  dur: "5s",   del: "0s" },
+      { left: 18, dur: "6s",   del: "1s" },
+      { left: 28, dur: "5.5s", del: "2s" },
+      { left: 38, dur: "6.5s", del: "0.5s" },
+      { left: 48, dur: "5.8s", del: "1.5s" },
+      { left: 58, dur: "6.2s", del: "0.8s" },
+      { left: 68, dur: "5.5s", del: "2.2s" },
+      { left: 78, dur: "6s",   del: "1.2s" },
+      { left: 88, dur: "5.7s", del: "1.8s" },
+      { left: 95, dur: "6.3s", del: "0.3s" },
+      { left: 3,  dur: "5.4s", del: "2.5s" },
+    ];
+
+    const CONFETTI_COLORS = ["#ff69b4", "#ff1493", "#ffb6d9", "#ffc0cb", "#ffd700", "#ffffff", "#ff85a2", "#ffa0c4"];
+    const HEART_SYMBOLS = ["💕", "💖", "💗", "🤍", "🩷", "❤️", "♡"];
+    
+    // Emoji Lucu untuk Sentuhan Ajaib
+    const CUTE_EMOJIS = ["🧸", "🎀", "💖", "✨", "🦋", "🍭", "🍬", "🎈", "🐰", "🐻"];
+
+    const MESSAGE_LINES = [
+      "Hari ini adalah hari spesial bagimu.",
+      "Aku tahu.",
+      "Dari sekian banyak orang yang mengucapkan selamat ulang tahun untukmu, aku ingin menjadi salah satu diantaranya.",
+      "Pada malam yang indah ini, izinkan aku mengucapkan selamat ulang tahun untukmu.",
+      'Maaf tidak ku ucapkan secara langsung di depanmu, tidak juga kuberi kalimat-kalimat indah, cuma tiga kata saja "selamat ulang tahun" iya, itu saja.',
+      "Hanya kutuliskan dengan kalimat sederhana dengan perasaan yang luar biasa.",
+      "Tapi dibalik kalimat itu, ada harapan dan doa terbaik untukmu.",
+    ];
+
+    const FIRST_MEET_LINES = [
+      { text: "Ini foto pertama kali kita ketemu.", cls: "gap-after", style: "italic" },
+      { text: "Jujur, aku gak nyangka…", cls: "", style: "normal" },
+      { text: "Ternyata kamu jauh lebih cantik dari yang aku lihat di foto.", cls: "gap-before", style: "normal" },
+      { text: "Waktu itu aku deg-degan banget.", cls: "gap-before", style: "normal" },
+      { text: "Kaku, bingung mau ngomong apa,", cls: "indent", style: "normal" },
+      { text: "tapi entah gimana aku bisa duduk di samping kamu.", cls: "indent gap-after", style: "normal" },
+      { text: "Awalnya aku kira,", cls: "gap-before", style: "normal" },
+      { text: "itu cuma pertemuan singkat yang bakal lewat begitu saja.", cls: "indent gap-after", style: "normal" },
+      { text: "Tapi ternyata…", cls: "gap-before", style: "normal" },
+      { text: "dari pertemuan sederhana itu,", cls: "indent", style: "normal" },
+      { text: "kita bisa sampai sejauh ini.", cls: "indent gap-after", style: "normal" },
+      { text: "Dan kalau waktu bisa diulang,", cls: "gap-before", style: "normal" },
+      { text: "aku tetap akan pilih hari itu—", cls: "indent", style: "normal" },
+      { text: "hari di mana aku pertama kali ketemu kamu.", cls: "indent", style: "bold" },
+    ];
+
+    const WISHES = [
+      { text: "Terima kasih sudah selalu jadi alasan aku senyum.", icon: "💖", delay: 0.1 },
+      { text: "Semoga tahun ini penuh kebahagiaan yang kamu pantas dapatkan.", icon: "🌟", delay: 0.25 },
+      { text: "Semoga semua mimpi-mimpimu terwujud, satu per satu.", icon: "✨", delay: 0.4 },
+      { text: "Terus jadi orang yang baik, hangat, dan menyenangkan kayak sekarang.", icon: "🌸", delay: 0.55 },
+      { text: "Maaf kalau aku belum bisa jadi yang terbaik buat kamu.", icon: "🥺", delay: 0.7 },
+      { text: "Tapi aku janji, aku akan terus berusaha.", icon: "🤝", delay: 0.85 },
+      { text: "Selamat ulang tahun, Puspa.", icon: "🎂", delay: 1.0, bold: true },
+      { text: "Aku bersyukur banget kamu ada di hidupku.", icon: "💕", delay: 1.15, bold: true },
+    ];
+
+    const FINAL_LINES = [
+      { text: "Foto-foto ini mungkin cuma hasil jepretan di mesin foto kecil.", cls: "", style: "normal", delay: 0.1 },
+      { text: "Tapi buat aku, ini bukti bahwa aku pernah ada di ruang yang sama denganmu.", cls: "gap-before", style: "normal", delay: 0.2 },
+      { text: "Di dalam photobox yang sempit itu…", cls: "gap-before", style: "normal", delay: 0.35 },
+      { text: "aku merasa dunia ini milik kita berdua.", cls: "indent", style: "normal", delay: 0.45 },
+      { text: "Kamu pakai telinga kelinci, bilang pose ini kaku banget.", cls: "gap-before", style: "normal", delay: 0.6 },
+      { text: "Tapi aku justru melihat sisi kamu yang paling aku suka—", cls: "gap-before", style: "normal", delay: 0.7 },
+      { text: "bahagia, polos, tanpa berpura-pura.", cls: "indent", style: "normal", delay: 0.8 },
+      { text: "Setiap kali lihat foto ini,", cls: "gap-before", style: "normal", delay: 0.95 },
+      { text: "aku ingat bagaimana kamu tertawa tanpa sebab,", cls: "indent", style: "normal", delay: 1.05 },
+      { text: "bagaimana kamu nolong aku pasang pose,", cls: "indent", style: "normal", delay: 1.15 },
+      { text: "dan bagaimana di momen-momen kecil itulah…", cls: "indent gap-after", style: "normal", delay: 1.25 },
+      { text: "aku yakin,", cls: "gap-before", style: "normal", delay: 1.4 },
+      { text: "kamu adalah orang yang ingin aku temani.", cls: "indent", style: "normal", delay: 1.5 },
+      { text: "Bukan cuma hari ini.", cls: "indent", style: "normal", delay: 1.6 },
+      { text: "Tapi selama aku bisa.", cls: "indent", style: "bold", delay: 1.75 },
+    ];
+
+    // ─── HELPERS ─────────────────────────────────────────────────────────
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const randPct = () => `${Math.random() * 100}%`;
+    const randBetween = (a, b) => Math.random() * (b - a) + a;
+
+    function makeConfetti(n, offset) {
+      const shapes = ["50%", "2px", "0"];
+      return Array.from({ length: n }, (_, i) => ({
+        id: Date.now() + i + offset,
+        left: randPct(),
+        top: `${Math.random() * 8}%`,
+        color: pick(CONFETTI_COLORS),
+        dur: `${randBetween(2, 4)}s`,
+        del: `${Math.random() * 0.8}s`,
+        w: `${randBetween(6, 12)}px`,
+        h: `${randBetween(6, 12)}px`,
+        radius: pick(shapes),
+      }));
+    }
+
+    function makeSparkles(n, offset) {
+      return Array.from({ length: n }, (_, i) => ({
+        id: Date.now() + i + offset,
+        left: randPct(),
+        top: `${Math.random() * 50}%`,
+        dur: `${randBetween(2, 4)}s`,
+        del: `${Math.random() * 1}s`,
+      }));
+    }
+
+    function makeHearts(n, offset) {
+      return Array.from({ length: n }, (_, i) => ({
+        id: Date.now() + i + offset,
+        left: randPct(),
+        bottom: `${randBetween(-5, 10)}%`,
+        symbol: pick(HEART_SYMBOLS),
+        dur: `${randBetween(6, 12)}s`,
+        del: `${Math.random() * 6}s`,
+        size: `${randBetween(14, 28)}px`,
+        drift: `${randBetween(-40, 40)}px`,
+        rot: `${randBetween(-30, 30)}deg`,
+      }));
+    }
+
+    // ─── SafeImage: fallback kalau foto gagal load ───────────────────────
+    function SafeImage({ src, alt, style, className }) {
+      const [err, setErr] = useState(false);
+
+      if (err) {
+        return (
+          <div className="img-fallback" style={style}>
+            <div style={{ fontSize: '2rem' }}>📁</div>
+            <span>Foto Tidak Ditemukan</span>
+            <span style={{ fontSize: '0.7rem', marginTop: '5px', opacity: 0.7 }}>{alt}</span>
+          </div>
+        );
+      }
+      return <img src={src} alt={alt} style={style} className={className} onError={() => setErr(true)} />;
+    }
+
+    // ─── BACKGROUND LAYERS ───────────────────────────────────────────────
+    function BackgroundOrbs() {
+      return (
+        <>
+          <div className="orb orb-1" />
+          <div className="orb orb-2" />
+          <div className="orb orb-3" />
+        </>
+      );
+    }
+
+    // ─── BALOONS ─────────────────────────────────────────────────────────
+    function Balloons() {
+      return (
+        <>
+          {BALLOON_CONFIGS.map((b, i) => (
+            <div
+              key={i}
+              className="fixed animate-balloon"
+              style={{
+                width: 30,
+                height: 40,
+                borderRadius: "50% 50% 50% 0",
+                bottom: -50,
+                left: `${b.left}%`,
+                background: BALLOON_COLORS[i],
+                "--dur": b.dur,
+                "--del": b.del,
+                filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.15))",
+                willChange: "transform",
+                zIndex: 1,
+              }}
+            />
+          ))}
+        </>
+      );
+    }
+
+    // ─── CONFETTI LAYER ─────────────────────────────────────────────────
+    function ConfettiLayer({ pieces }) {
+      return (
+        <>
+          {pieces.map((p) => (
+            <div
+              key={p.id}
+              className="fixed animate-confetti-fall"
+              style={{
+                width: p.w,
+                height: p.h,
+                left: p.left,
+                top: p.top,
+                backgroundColor: p.color,
+                borderRadius: p.radius,
+                "--dur": p.dur,
+                "--del": p.del,
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
+                willChange: "transform",
+                zIndex: 2,
+              }}
+            />
+          ))}
+        </>
+      );
+    }
+
+    // ─── SPARKLE LAYER ──────────────────────────────────────────────────
+    function SparkleLayer({ pieces }) {
+      return (
+        <>
+          {pieces.map((s) => (
+            <div
+              key={s.id}
+              className="fixed animate-sparkle select-none"
+              style={{
+                left: s.left,
+                top: s.top,
+                fontSize: "1.4rem",
+                "--dur": s.dur,
+                "--del": s.del,
+                zIndex: 2,
+              }}
+            >
+              ✨
+            </div>
+          ))}
+        </>
+      );
+    }
+
+    // ─── FLOATING HEARTS ─────────────────────────────────────────────────
+    function FloatingHearts({ pieces }) {
+      return (
+        <>
+          {pieces.map((h) => (
+            <div
+              key={h.id}
+              className="fixed animate-heart-float select-none"
+              style={{
+                left: h.left,
+                bottom: h.bottom,
+                fontSize: h.size,
+                "--dur": h.dur,
+                "--del": h.del,
+                "--drift": h.drift,
+                "--rot": h.rot,
+                zIndex: 1,
+              }}
+            >
+              {h.symbol}
+            </div>
+          ))}
+        </>
+      );
+    }
+    
+    // ─── CLICK BURST LAYER (NEW: Lucu & Interaktif) ─────────────────────
+    function BurstLayer({ bursts }) {
+      return (
+        <>
+          {bursts.map((b) => (
+            <div
+              key={b.id}
+              className="burst-emoji select-none"
+              style={{
+                left: b.x,
+                top: b.y,
+                "--tx": `${b.dx}px`,
+                "--ty": `${b.dy}px`,
+              }}
+            >
+              {b.emoji}
+            </div>
+          ))}
+        </>
+      );
+    }
+
+    // ─── MUSIC BUTTON ──────────────────────────────────────────────────
+    function MusicButton({ playing, onToggle }) {
+      return (
+        <button
+          onClick={onToggle}
+          className="fixed top-4 right-4 z-[100] w-12 h-12 rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+          style={{
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(10px)",
+            border: "1.5px solid rgba(255,255,255,0.4)",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+          }}
+          aria-label={playing ? "Pause musik" : "Putar musik"}
+          title={playing ? "Pause musik" : "Putar musik"}
+        >
+          <span
+            className={`text-xl ${playing ? "music-spin" : "music-spin music-paused"}`}
+            style={{ display: "inline-block" }}
+          >
+            🎵
+          </span>
+        </button>
+      );
+    }
+
+    // ─── DOT INDICATOR ──────────────────────────────────────────────────
+    function DotIndicator({ current, total, onGo }) {
+      return (
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex gap-2">
+          {Array.from({ length: total }, (_, i) => (
+            <div
+              key={i}
+              className={`dot ${i === current ? "active" : ""}`}
+              onClick={() => onGo(i + 1)}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    // ─── WELCOME SCREEN ─────────────────────────────────────────────────
+    function WelcomeScreen({ onStart }) {
+      return (
+        <div className="fixed inset-0 flex flex-col items-center justify-center gap-5 z-50 animated-bg">
+          {/* EMOJI LUCU DI ATAS */}
+          <div className="text-4xl md:text-5xl animate-emoji-float select-none mb-2">
+            🥰🧸🌸
+          </div>
+
+          {/* TEKS UTAMA: 💝 Hai Puspa 💝 */}
+          <div className="flex items-center justify-center gap-3 md:gap-5 w-full max-w-2xl px-4">
+            <span className="text-4xl md:text-5xl animate-arrow-right select-none">💝</span>
+            <h1
+              className="text-6xl md:text-7xl font-bold text-white animate-welcome-bounce select-none font-script"
+              style={{ textShadow: "5px 5px 15px rgba(0,0,0,0.3)" }}
+            >
+              Hai Puspa
+            </h1>
+            <span className="text-4xl md:text-5xl animate-arrow-left select-none">💝</span>
+          </div>
+
+          {/* SUBTITLE DENGAN EMOJI */}
+          <div className="relative flex items-center justify-center gap-4 mt-2 px-4">
+            <span className="text-3xl md:text-4xl animate-emoji-float select-none" style={{ animationDelay: '0.1s' }}>
+              🎁
+            </span>
+            <p
+              className="text-xl md:text-2xl text-white animate-float-subtitle select-none text-center"
+              style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+            >
+              aku ada sesuatu buat kamu
+            </p>
+            <span className="text-3xl md:text-4xl animate-emoji-float select-none" style={{ animationDelay: '0.3s' }}>
+              🎁
+            </span>
+          </div>
+
+          <div className="mt-5">
+            <button
+              className="animate-box-pulse flex items-center gap-5 px-10 py-7 md:px-14 md:py-8 rounded-[20px] cursor-pointer"
+              style={{
+                border: "3px solid rgba(255,255,255,0.7)",
+                background: "rgba(255,255,255,0.1)",
+                backdropFilter: "blur(10px)",
+              }}
+              onClick={onStart}
+            >
+              <span className="text-3xl animate-arrow-right select-none">👉</span>
+              <span
+                className="text-xl md:text-2xl font-bold text-white animate-pulse-text whitespace-nowrap select-none"
+                style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+              >
+                Coba Pencet Ini
+              </span>
+              <span className="text-3xl animate-arrow-left select-none">👈</span>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── COUNTDOWN SCREEN (Update: Fix Leg Issue) ────────────────────────
+    function CountdownScreen({ number, animKey }) {
+      return (
+        <div className="fixed inset-0 flex flex-col items-center justify-center z-50 animated-bg p-4">
+          <div className="countdown-container w-full">
+            <div
+              key={animKey}
+              className="countdown-number animate-countdown-pulse select-none font-script"
+            >
+              {number}
+            </div>
+            <p className="countdown-label select-none">
+              Bersiaplah!
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── SLIDE 1: UCAPAN ────────────────────────────────────────────────
+    function SlideUcapan({ onCelebrate, onNext, onTouchPhoto }) {
+      return (
+        <div className="w-full min-h-screen flex flex-col items-center justify-center px-5 py-20 animate-fade-in-content">
+          <div className="text-5xl md:text-6xl animate-emoji-float select-none mb-6">🎉💕🎂💕🎉</div>
+          <h1
+            className="text-4xl md:text-6xl font-bold text-white animate-bounce-in font-script"
+            style={{ textShadow: "3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,105,180,0.5)" }}
+          >
+            Selamat Ulang Tahun!
+          </h1>
+          <h2
+            className="text-2xl md:text-3xl animate-slide-in-name my-5 select-none font-script"
+            style={{
+              color: "#ff1493",
+              textShadow: "2px 2px 4px rgba(0,0,0,0.2), 0 0 20px rgba(255,105,180,0.4)",
+            }}
+          >
+            ✨ Puspa Indah Mei Kurniawan ✨
+          </h2>
+          <p
+            className="text-lg md:text-xl text-white italic animate-birthdate my-2.5"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.2)" }}
+          >
+            📅 04 Mei 2000
+          </p>
+
+          {/* Foto (Clickable Wiggle) */}
+          <div className="my-6 flex justify-center animate-touching-msg">
+            <div
+              className="photo-frame-shimmer rounded-3xl overflow-hidden cursor-pointer active:scale-95 transition-transform"
+              style={{
+                boxShadow: "0 8px 32px rgba(255,20,147,0.4), 0 0 0 4px rgba(255,255,255,0.5)",
+                width: 220,
+                height: 300,
+              }}
+              onClick={onTouchPhoto}
+              title="Klik aku dong!"
+            >
+              <SafeImage
+                src={PHOTO_URL}
+                alt="Puspa"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center 30%",
+                  display: "block",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Pesan */}
+          <div
+            className="animate-message-slide my-6 rounded-3xl px-7 py-8 text-left max-w-lg mx-auto"
+            style={{
+              background: "rgba(255,255,255,0.18)",
+              backdropFilter: "blur(12px)",
+              border: "1.5px solid rgba(255,255,255,0.4)",
+              boxShadow: "0 8px 32px rgba(255,20,147,0.15)",
+            }}
+          >
+            {MESSAGE_LINES.map((line, i) => (
+              <p
+                key={i}
+                className="text-base md:text-lg mb-4 leading-relaxed"
+                style={{
+                  color: "#fff0f5",
+                  textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
+                }}
+              >
+                {line}
+              </p>
+            ))}
+            <p
+              className="text-lg md:text-xl font-bold mt-6 text-center leading-relaxed"
+              style={{
+                color: "#fff",
+                textShadow: "0 0 20px rgba(255,105,180,0.9), 1px 1px 4px rgba(0,0,0,0.3)",
+              }}
+            >
+              Selamat ulang tahun, semoga hari ini kau menjadi orang paling bahagia di dunia. 💕
+            </p>
+          </div>
+
+          {/* Tombol */}
+          <div className="mt-4 flex flex-col items-center gap-4">
+            <button
+              className="animate-wish-button text-white font-bold text-lg px-10 py-4 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+              style={{
+                background: "linear-gradient(135deg, #ff1493, #ff69b4)",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+              }}
+              onClick={onCelebrate}
+            >
+              <span className="text-3xl animate-arrow-right select-none">👉</span>
+              <span
+                className="text-xl md:text-2xl font-bold text-white animate-pulse-text whitespace-nowrap select-none"
+                style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+              >
+                Coba Pencet Ini
+              </span>
+              <span className="text-3xl animate-arrow-left select-none">👈</span>
+            </button>
+            <button
+              className="animate-lanjut-btn flex items-center gap-2 px-7 py-3 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
+              style={{
+                background: "rgba(255,255,255,0.2)",
+                backdropFilter: "blur(8px)",
+                border: "1.5px solid rgba(255,255,255,0.4)",
+              }}
+              onClick={onNext}
+            >
+              <span className="text-white text-base font-semibold select-none" style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}>Lanjutkan</span>
+              <span className="text-white text-lg animate-arrow-bounce select-none">→</span>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── SLIDE 2: KENANGAN ───────────────────────────────────────────────
+    function SlideKenangan({ onNext, onPrev }) {
+      return (
+        <div className="w-full min-h-screen flex items-center justify-center px-5 py-16 animate-fade-slide-in">
+          <div
+            className="max-w-lg w-full rounded-3xl overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(16px)",
+              border: "1.5px solid rgba(255,255,255,0.4)",
+              boxShadow: "0 10px 40px rgba(255,20,147,0.2)",
+            }}
+          >
+            {/* Header */}
+            <div className="text-center pt-8 pb-4 px-6">
+              <div className="text-3xl mb-2">📸🥰📸</div>
+              <p className="text-sm md:text-base font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.8)" }}>
+                Kenangan Pertama Kita
+              </p>
+            </div>
+            {/* Gambar */}
+            <div className="px-5 pb-5">
+              <div
+                className="photo-frame-shimmer rounded-2xl overflow-hidden"
+                style={{ width: "100%", height: 360, background: "rgba(0,0,0,0.3)", boxShadow: "0 8px 30px rgba(0,0,0,0.4), 0 0 0 4px rgba(255,255,255,0.3)" }}
+              >
+                <SafeImage
+                  src={FIRST_MEET_PHOTO}
+                  alt="Pertama ketemu"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+              </div>
+            </div>
+            {/* Teks */}
+            <div className="px-8 pt-4 pb-6">
+              {FIRST_MEET_LINES.map((item, i) => {
+                const isLast = i === FIRST_MEET_LINES.length - 1;
+                const isFirst = i === 0;
+                let cls = "line-poem";
+                if (item.cls.includes("indent")) cls += " indent";
+                if (item.cls.includes("gap-before")) cls += " gap-before";
+                if (item.cls.includes("gap-after")) cls += " gap-after";
+                return (
+                  <p
+                    key={i}
+                    className={cls}
+                    style={{
+                      fontSize: isFirst ? "0.95rem" : "0.9rem",
+                      lineHeight: "1.8",
+                      color: isLast ? "#ffffff" : "rgba(255,240,245,0.9)",
+                      fontWeight: isLast ? "bold" : "normal",
+                      fontStyle: isFirst ? "italic" : "normal",
+                      textShadow: isLast ? "0 0 18px rgba(255,105,180,0.9), 1px 1px 4px rgba(0,0,0,0.3)" : "1px 1px 2px rgba(0,0,0,0.15)",
+                      textAlign: "left",
+                    }}
+                  >
+                    {isFirst ? `📸 "${item.text}"` : item.text}
+                  </p>
+                );
+              })}
+            </div>
+            {/* Navigasi */}
+            <div className="pb-8 flex justify-center gap-4">
+              <NavButton direction="left" onClick={onPrev} />
+              <NavButton direction="right" onClick={onNext} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── SLIDE 3: WISHES ───────────────────────────────────────────────
+    function SlideWishes({ onNext, onPrev }) {
+      return (
+        <div className="w-full min-h-screen flex flex-col items-center justify-between px-3 py-3 animate-fade-slide-in">
+          
+          {/* Header */}
+          <div className="text-center mb-1 flex-shrink-0">
+            <div className="text-3xl md:text-4xl animate-emoji-float select-none mb-1">🎀🎁💖🎁🎀</div>
+            <h2 className="text-xl md:text-2xl font-bold text-white font-script"
+              style={{ textShadow: "2px 2xl 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,105,180,0.4)" }}>
+              Doa & Harapan
+            </h2>
+          </div>
+
+          {/* Container Kereta: Atas & Bawah */}
+          <div className="w-full flex flex-col gap-2 mb-2 flex-grow-0">
+            {/* Kereta 1 */}
+            <div className="w-full overflow-hidden rounded-xl py-2" style={{ background: "rgba(255,255,255,0.08)" }}>
+              <div className="train-track">
+                {GALLERY_PHOTOS.map((url, i) => (
+                  <div key={`a-${i}`} className="train-item" style={{ width: 140, height: 180 }}>
+                    <SafeImage src={url} alt={`Foto ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ))}
+                {GALLERY_PHOTOS.map((url, i) => (
+                  <div key={`b-${i}`} className="train-item" style={{ width: 140, height: 180 }}>
+                    <SafeImage src={url} alt={`Foto ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Kereta 2 */}
+            <div className="w-full overflow-hidden rounded-xl py-2" style={{ background: "rgba(255,255,255,0.08)" }}>
+              <div className="train-track-reverse">
+                {GALLERY_PHOTOS.map((url, i) => (
+                  <div key={`c-${i}`} className="train-item" style={{ width: 140, height: 180 }}>
+                    <SafeImage src={url} alt={`Foto ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ))}
+                {GALLERY_PHOTOS.map((url, i) => (
+                  <div key={`d-${i}`} className="train-item" style={{ width: 140, height: 180 }}>
+                    <SafeImage src={url} alt={`Foto ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Pesan Harapan (Scrolledable jika text terlalu panjang) */}
+          <div
+            className="rounded-3xl px-4 py-4 w-full max-w-lg mb-2 overflow-y-auto"
+            style={{
+              maxHeight: "25vh", // Batas tinggi teks agar tidak leg
+              background: "rgba(255,255,255,0.16)",
+              backdropFilter: "blur(14px)",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+              boxShadow: "0 8px 30px rgba(255,20,147,0.15)",
+            }}
+          >
+            {WISHES.map((w, i) => (
+              <div
+                key={i}
+                className="wish-stagger flex items-start gap-3 mb-3"
+                style={{ animationDelay: `${w.delay}s` }}
+              >
+                <span className="text-lg flex-shrink-0 mt-0 select-none">{w.icon}</span>
+                <p
+                  className="leading-snug text-sm md:text-base"
+                  style={{
+                    color: w.bold ? "#ffffff" : "rgba(255,240,245,0.9)",
+                    fontWeight: w.bold ? "bold" : "normal",
+                    textShadow: w.bold ? "0 0 12px rgba(255,105,180,0.8)" : "1px 1px 2px rgba(0,0,0,0.15)",
+                  }}
+                >
+                  {w.text}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigasi */}
+          <div className="flex gap-3 flex-shrink-0">
+            <NavButton direction="left" onClick={onPrev} />
+            <NavButton direction="right" onClick={onNext} />
+          </div>
+        </div>
+      );
+    }
+
+    // ─── SLIDE 4: PHOTOBOX FINAL ────────────────────────────────────────
+    function SlideFinal({ onPrev, onReplay, onGrandFinale }) {
+      const [showFinale, setShowFinale] = useState(false);
+
+      const handleFinale = () => {
+        setShowFinale(true);
+        onGrandFinale();
+      };
+
+      return (
+        <div className="w-full min-h-screen flex flex-col items-center justify-center px-5 py-16 animate-fade-slide-up">
+          {/* Header */}
+          <div className="text-center mb-5">
+            <div className="text-4xl md:text-5xl animate-emoji-float select-none mb-2">🐰📷💕📷🐰</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white font-script"
+              style={{ textShadow: "3px 3px 8px rgba(0,0,0,0.3), 0 0 25px rgba(255,105,180,0.5)" }}>
+              Momen di Photobox
+            </h2>
+          </div>
+          {/* Foto-foto Photobox */}
+          <div className="grid grid-cols-2 gap-3 mb-6 w-full max-w-md px-2">
+            {PHOTOBOTH_PHOTOS.map((url, i) => (
+              <div key={i} className="photo-mem photo-frame-shimmer" style={{ height: 280 }}>
+                <SafeImage
+                  src={url}
+                  alt={`Photobox ${i + 1}`}
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+              </div>
+            ))}
+          </div>
+          {/* Pesan Akhir */}
+          <div
+            className="rounded-3xl px-6 py-7 max-w-lg w-full"
+            style={{
+              background: "rgba(255,255,255,0.14)",
+              backdropFilter: "blur(14px)",
+              border: "1.5px solid rgba(255,255,255,0.3)",
+              boxShadow: "0 8px 30px rgba(255,20,147,0.12)",
+            }}
+          >
+            {FINAL_LINES.map((item, i) => {
+              const isLast = i === FINAL_LINES.length - 1;
+              let cls = "line-poem";
+              if (item.cls.includes("indent")) cls += " indent";
+              if (item.cls.includes("gap-before")) cls += " gap-before";
+              if (item.cls.includes("gap-after")) cls += " gap-after";
+              return (
+                <p
+                  key={i}
+                  className={`${cls} final-stagger`}
+                  style={{
+                    animationDelay: `${item.delay}s`,
+                    fontSize: "0.9rem",
+                    lineHeight: "1.8",
+                    color: isLast ? "#ffffff" : "rgba(255,240,245,0.85)",
+                    fontWeight: isLast ? "bold" : "normal",
+                    textShadow: isLast
+                      ? "0 0 20px rgba(255,105,180,1), 0 0 40px rgba(255,20,147,0.6), 1px 1px 4px rgba(0,0,0,0.3)"
+                      : "1px 1px 2px rgba(0,0,0,0.15)",
+                    textAlign: "left",
+                  }}
+                >
+                  {item.text}
+                </p>
+              );
+            })}
+
+            {/* Pesan Akhir */}
+            <div
+              className="final-stagger text-center mt-6"
+              style={{ animationDelay: "2s" }}
+            >
+              <p
+                className="text-xl md:text-2xl font-bold animate-heartbeat-glow font-script"
+                style={{ color: "#ffffff", lineHeight: "1.8" }}
+              >
+                Selamat ulang tahun, Puspa. 🤍
+              </p>
+              <p
+                className="text-base mt-2"
+                style={{
+                  color: "rgba(255,255,255,0.7)",
+                  fontStyle: "italic",
+                  textShadow: "1px 1px 2px rgba(0,0,0,0.15)",
+                }}
+              >
+                Terima kasih sudah memilih aku.
+              </p>
+            </div>
+          </div>
+          {/* Tombol */}
+          <div className="mt-6 flex flex-col items-center gap-3">
+            {!showFinale && (
+              <button
+                onClick={handleFinale}
+                className="flex items-center gap-2 px-8 py-4 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 animate-grand-burst"
+                style={{
+                  background: "linear-gradient(135deg, #ff1493, #ffd700)",
+                  boxShadow: "0 4px 20px rgba(255,20,147,0.4)",
+                }}
+              >
+                <span
+                  className="text-white text-lg font-bold select-none"
+                  style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                >
+                  Kirim Semua Cinta 💌
+                </span>
+              </button>
+            )}
+            {/* Pesan untuk restart */}
+            {showFinale && (
+              <div className="animate-grand-burst text-center">
+                <p className="text-2xl font-bold text-white font-script animate-heartbeat-glow">
+                  Dari aku, dengan sepenuh hati 💗
+                </p>
+              </div>
+            )}
+            {/* Tombol Restart */}
+            <div className="flex gap-4 mt-2">
+              <NavButton direction="left" onClick={onPrev} />
+              <button
+                onClick={onReplay}
+                className="flex items-center gap-2 px-6 py-3 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
+                style={{
+                  background: "rgba(255,255,255,0.2)",
+                  backdropFilter: "blur(8px)",
+                  border: "1.5px solid rgba(255,255,255,0.4)",
+                }}
+              >
+                <span
+                  className="text-white text-base font-semibold select-none"
+                  style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                >
+                  🔄 Mulai Lagi
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── REUSABLE NAV BUTTON ─────────────────────────────────────────────
+    function NavButton({ direction, onClick }) {
+      const isRight = direction === "right";
+      return (
+        <button
+          onClick={onClick}
+          className="flex items-center gap-2 px-6 py-3 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
+          style={{
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(8px)",
+            border: "1.5px solid rgba(255,255,255,0.4)",
+          }}
+        >
+          {isRight ? (
+            <>
+              <span
+                className="text-white text-base font-semibold select-none"
+                style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+              >
+                Lanjutkan
+              </span>
+              <span className="text-white text-lg animate-arrow-bounce select-none">→</span>
+            </>
+          ) : (
+            <>
+              <span className="text-white text-lg animate-arrow-bounce-left select-none">←</span>
+              <span
+                className="text-white text-base font-semibold select-none"
+                style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+              >
+                Kembali
+              </span>
+            </>
+          )}
+        </button>
+      );
+    }
+
+    // ─── MAIN APP ─────────────────────────────────────────────────────────
+    function App() {
+      const [screen, setScreen] = useState("welcome");
+      const [activeSlide, setActiveSlide] = useState(1);
+      const [countdownNum, setCountdownNum] = useState(3);
+      const [countdownKey, setCountdownKey] = useState(0);
+      const [confetti, setConfetti] = useState([]);
+      const [sparkles, setSparkles] = useState([]);
+      const [hearts, setHearts] = useState([]);
+      const [clickBursts, setClickBursts] = useState([]); // NEW: Magic Touch State
+      const [musicPlaying, setMusicPlaying] = useState(false);
+      const idRef = useRef(0);
+      const audioRef = useRef(null);
+
+      const nextId = () => idRef.current++;
+
+      // Inisialisasi Audio
+      useEffect(() => {
+        if (!audioRef.current) {
+          audioRef.current = new Audio(MUSIC_FILE_URL);
+          audioRef.current.loop = true;
+          audioRef.current.volume = 0.5;
+        }
+        return () => {
+          if (audioRef.current) audioRef.current.pause();
+        };
+      }, []);
+
+      // Handle start musik saat klik tombol
+      const handleWelcomeStart = useCallback(() => {
+        if (audioRef.current) {
+          audioRef.current
+            .play()
+            .then(() => {
+              setMusicPlaying(true);
+              console.log("Musik berhasil diputar via user interaction");
+            })
+            .catch((error) => {
+              console.log("Gagal play musik:", error);
+            });
+        }
+        setScreen("countdown");
+      }, []);
+
+      // Toggle musik
+      const toggleMusic = useCallback(() => {
+        if (!audioRef.current) return;
+        if (musicPlaying) {
+          audioRef.current.pause();
+          setMusicPlaying(false);
+        } else {
+          audioRef.current.play().catch((e) => console.error("Error play:", e));
+          setMusicPlaying(true);
+        }
+      }, [musicPlaying]);
+
+      // Fungsi spawn efek
+      const addPieces = (maker, n, setter, lifetime) => {
+        const pieces = maker(n, nextId());
+        const ids = pieces.map((p) => p.id);
+        setter((prev) => [...prev, ...pieces]);
+        setTimeout(() => setter((prev) => prev.filter((p) => !ids.includes(p.id))), lifetime);
+      };
+
+      const spawnConfetti = () => addPieces(makeConfetti, 50, setConfetti, 5000);
+      const spawnSparkles = () => addPieces(makeSparkles, 10, setSparkles, 5000);
+      const spawnHearts = () => addPieces(makeHearts, 8, setHearts, 15000);
+
+      const handleCelebrate = () => {
+        spawnConfetti();
+        spawnSparkles();
+        spawnHearts();
+      };
+
+      const handleGrandFinale = () => {
+        addPieces(makeConfetti, 120, setConfetti, 6000);
+        addPieces(makeSparkles, 25, setSparkles, 6000);
+        addPieces(makeHearts, 20, setHearts, 18000);
+        if (!musicPlaying && audioRef.current) {
+          audioRef.current.play().catch(() => {});
+          setMusicPlaying(true);
+        }
+      };
+
+      const handleReplay = () => {
+        setActiveSlide(1);
+        setScreen("welcome");
+        setConfetti([]);
+        setSparkles([]);
+        setHearts([]);
+      };
+
+      // NEW: Handle Screen Click (Sentuhan Ajaib)
+      const handleScreenClick = useCallback((e) => {
+        // Jangan trigger jika user sedang klik tombol atau elemen interaktif lain
+        if (e.target.closest('button')) return;
+
+        const numBursts = 5;
+        const newBursts = [];
+        const { clientX, clientY } = e;
+
+        for (let i = 0; i < numBursts; i++) {
+          const angle = (Math.PI * 2 * i) / numBursts;
+          const velocity = 50 + Math.random() * 50;
+          const dx = Math.cos(angle) * velocity;
+          const dy = Math.sin(angle) * velocity;
+          
+          newBursts.push({
+            id: Date.now() + i,
+            x: clientX,
+            y: clientY,
+            dx,
+            dy,
+            emoji: pick(CUTE_EMOJIS)
+          });
+        }
+
+        setClickBursts(prev => [...prev, ...newBursts]);
+        setTimeout(() => {
+          setClickBursts(prev => prev.filter(b => !newBursts.map(nb => nb.id).includes(b.id)));
+        }, 800);
+      }, []);
+
+      // NEW: Handle Photo Wiggle
+      const handlePhotoWiggle = useCallback((e) => {
+        e.stopPropagation(); // Jangan trigger burst layar
+        const photo = e.currentTarget;
+        photo.classList.remove('animate-wiggle');
+        void photo.offsetWidth; // trigger reflow
+        photo.classList.add('animate-wiggle');
+      }, []);
+
+      // Swipe dan Keyboard
+      const touchStartX = useRef(null);
+      const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+      const handleTouchEnd = (e) => {
+        if (touchStartX.current === null) return;
+        const diff = touchStartX.current - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 60) {
+          if (diff > 0 && activeSlide < 4) setActiveSlide((s) => s + 1);
+          if (diff < 0 && activeSlide > 1) setActiveSlide((s) => s - 1);
+        }
+        touchStartX.current = null;
+      };
+
+      useEffect(() => {
+        const handler = (e) => {
+          if (screen !== "main") return;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            if (activeSlide < 4) setActiveSlide((s) => s + 1);
+          }
+          if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            if (activeSlide > 1) setActiveSlide((s) => s - 1);
+          }
+        };
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
+      }, [screen, activeSlide]);
+
+      // Countdown effect
+      useEffect(() => {
+        if (screen !== "countdown") return;
+        let count = 3;
+        setCountdownNum(count);
+        setCountdownKey((k) => k + 1);
+        const iv = setInterval(() => {
+          count--;
+          if (count > 0) {
+            setCountdownNum(count);
+            setCountdownKey((k) => k + 1);
+          } else {
+            clearInterval(iv);
+            setTimeout(() => setScreen("main"), 800);
+          }
+        }, 1000);
+        return () => clearInterval(iv);
+      }, [screen]);
+
+      // Efek spawn otomatis saat masuk main
+      useEffect(() => {
+        if (screen !== "main") return;
+        const t1 = setTimeout(() => { spawnConfetti(); spawnSparkles(); spawnHearts(); }, 500);
+        const t2 = setTimeout(sparkles, 3000);
+        const iv = setInterval(() => {
+          if (Math.random() > 0.5) spawnConfetti();
+          if (Math.random() > 0.6) spawnHearts();
+        }, 6000);
+        return () => { clearTimeout(t1); clearTimeout(t2); clearInterval(iv); };
+      }, [screen]);
+
+      const slideClass = activeSlide === 1 ? "at-1" : activeSlide === 2 ? "at-2" : activeSlide === 3 ? "at-3" : "at-4";
+
+      return (
+        <div 
+          className="relative w-full h-screen overflow-hidden animated-bg"
+          onClick={screen === 'main' ? handleScreenClick : undefined}
+          onTouchEnd={screen === 'main' ? handleScreenClick : undefined}
+        >
+          {/* Background dan Efek */}
+          <BackgroundOrbs />
+          <Balloons />
+          <ConfettiLayer pieces={confetti} />
+          <SparkleLayer pieces={sparkles} />
+          <FloatingHearts pieces={hearts} />
+          <BurstLayer bursts={clickBursts} /> {/* NEW: Magic Touch Layer */}
+
+          {/* Screen Utama */}
+          {screen === "welcome" && <WelcomeScreen onStart={handleWelcomeStart} />}
+          {screen === "countdown" && <CountdownScreen number={countdownNum} animKey={countdownKey} />}
+
+          {screen === "main" && (
+            <>
+              {/* Musik */}
+              <MusicButton playing={musicPlaying} onToggle={toggleMusic} />
+
+              {/* Slider */}
+              <div
+                className={`slider-track ${slideClass}`}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Slide 1: Ucapan */}
+                <div className="slide-page">
+                  <SlideUcapan onCelebrate={handleCelebrate} onNext={() => setActiveSlide(2)} onTouchPhoto={handlePhotoWiggle} />
+                </div>
+                {/* Slide 2: Kenangan */}
+                <div className="slide-page">
+                  <SlideKenangan onPrev={() => setActiveSlide(1)} onNext={() => setActiveSlide(3)} />
+                </div>
+                {/* Slide 3: Wish & Gallery */}
+                <div className="slide-page">
+                  <SlideWishes onPrev={() => setActiveSlide(2)} onNext={() => setActiveSlide(4)} />
+                </div>
+                {/* Slide 4: Final & Momen */}
+                <div className="slide-page">
+                  <SlideFinal onPrev={() => setActiveSlide(3)} onReplay={handleReplay} onGrandFinale={handleGrandFinale} />
+                </div>
+              </div>
+
+              {/* Indicator Dot */}
+              <DotIndicator current={activeSlide - 1} total={4} onGo={setActiveSlide} />
+            </>
+          )}
+        </div>
+      );
+    }
+
+    // Render App
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>	
