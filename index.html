@@ -52,11 +52,19 @@
       position: fixed; border-radius: 50%; pointer-events: none;
       filter: blur(60px); opacity: 0.35; will-change: transform;
     }
+    /* ─── Mobile Performance Optimizations ─── */
     @media (max-width: 768px) {
-      .orb { filter: blur(40px); opacity: 0.25; }
-      .orb-1 { width: 200px; height: 200px; }
-      .orb-2 { width: 160px; height: 160px; }
-      .orb-3 { width: 130px; height: 130px; }
+      /* Matikan animasi orb di mobile - penyebab lag terbesar */
+      .orb { display: none; }
+      /* Kurangi backdrop blur di semua elemen */
+      * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+      /* Percepat animasi background */
+      .animated-bg { animation-duration: 25s; }
+      /* Nonaktifkan shimmer di mobile */
+      .photo-frame-shimmer::after { display: none; }
+      /* Kurangi train scroll speed */
+      .train-track { animation-duration: 80s; }
+      .train-track-reverse { animation-duration: 100s; }
     }
     .orb-1 { width: 300px; height: 300px; background: #ff1493; top: 10%; left: -5%; animation: orbFloat1 12s ease-in-out infinite; }
     .orb-2 { width: 250px; height: 250px; background: #ffb6d9; top: 50%; right: -8%; animation: orbFloat2 15s ease-in-out infinite; }
@@ -361,7 +369,7 @@
       "linear-gradient(135deg, #ffd700, #ff69b4)",
     ];
 
-    const BALLOON_CONFIGS = [
+    const BALLOON_CONFIGS_DESKTOP = [
       { left: 8,  dur: "5s",   del: "0s" },
       { left: 18, dur: "6s",   del: "1s" },
       { left: 28, dur: "5.5s", del: "2s" },
@@ -374,6 +382,14 @@
       { left: 95, dur: "6.3s", del: "0.3s" },
       { left: 3,  dur: "5.4s", del: "2.5s" },
     ];
+    const BALLOON_CONFIGS_MOBILE = [
+      { left: 10, dur: "6s",   del: "0s" },
+      { left: 30, dur: "7s",   del: "1s" },
+      { left: 50, dur: "6.5s", del: "2s" },
+      { left: 70, dur: "7.5s", del: "0.5s" },
+      { left: 90, dur: "6s",   del: "1.5s" },
+    ];
+    const BALLOON_CONFIGS = window.innerWidth <= 768 ? BALLOON_CONFIGS_MOBILE : BALLOON_CONFIGS_DESKTOP;
 
     const CONFETTI_COLORS = ["#ff69b4", "#ff1493", "#ffb6d9", "#ffc0cb", "#ffd700", "#ffffff", "#ff85a2", "#ffa0c4"];
     const HEART_SYMBOLS = ["💕", "💖", "💗", "🤍", "🩷", "❤️", "♡"];
@@ -1341,9 +1357,9 @@
         setHearts([]);
       };
 
-      // NEW: Handle Screen Click (Sentuhan Ajaib)
+      // NEW: Handle Screen Click (Sentuhan Ajaib) - desktop only
       const handleScreenClick = useCallback((e) => {
-        // Jangan trigger jika user sedang klik tombol atau elemen interaktif lain
+        if (isMobile) return; // Matikan di mobile agar tidak lag saat scroll
         if (e.target.closest('button')) return;
 
         const numBursts = 5;
