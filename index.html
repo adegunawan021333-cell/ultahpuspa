@@ -52,6 +52,12 @@
       position: fixed; border-radius: 50%; pointer-events: none;
       filter: blur(60px); opacity: 0.35; will-change: transform;
     }
+    @media (max-width: 768px) {
+      .orb { filter: blur(40px); opacity: 0.25; }
+      .orb-1 { width: 200px; height: 200px; }
+      .orb-2 { width: 160px; height: 160px; }
+      .orb-3 { width: 130px; height: 130px; }
+    }
     .orb-1 { width: 300px; height: 300px; background: #ff1493; top: 10%; left: -5%; animation: orbFloat1 12s ease-in-out infinite; }
     .orb-2 { width: 250px; height: 250px; background: #ffb6d9; top: 50%; right: -8%; animation: orbFloat2 15s ease-in-out infinite; }
     .orb-3 { width: 200px; height: 200px; background: #ffd1dc; bottom: 5%; left: 30%; animation: orbFloat3 10s ease-in-out infinite; }
@@ -696,7 +702,7 @@
             </span>
             <p
               className="text-xl md:text-2xl text-white animate-float-subtitle select-none text-center"
-              style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+              style={{ textShadow: "3px 3px 8px rgba(0,0,0,0.3)" }}
             >
               aku ada sesuatu buat kamu
             </p>
@@ -715,14 +721,14 @@
               }}
               onClick={onStart}
             >
-              <span className="text-3xl animate-arrow-right select-none">👉</span>
+              <span className="text-3xl animate-welcome-bounce select-none">🎁</span>
               <span
                 className="text-xl md:text-2xl font-bold text-white animate-pulse-text whitespace-nowrap select-none"
-                style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+                style={{ textShadow: "3px 3px 8px rgba(0,0,0,0.3)" }}
               >
-                Coba Pencet Ini
+                Buka Hadiahmu
               </span>
-              <span className="text-3xl animate-arrow-left select-none">👈</span>
+              <span className="text-3xl animate-welcome-bounce select-none">🎁</span>
             </button>
           </div>
         </div>
@@ -752,12 +758,18 @@
     function SlideUcapan({ onCelebrate, onNext, onTouchPhoto }) {
       return (
         <div className="w-full min-h-screen flex flex-col items-center justify-center px-5 py-20 animate-fade-in-content">
-          <div className="text-5xl md:text-6xl animate-emoji-float select-none mb-6">🎉💕🎂💕🎉</div>
+          <div className="text-5xl md:text-6xl animate-emoji-float select-none mb-6">💖💕🎂💕💖</div>
           <h1
-            className="text-4xl md:text-6xl font-bold text-white animate-bounce-in font-script"
+            className="text-4xl md:text-6xl font-bold text-white animate-bounce-in font-script text-center"
             style={{ textShadow: "3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,105,180,0.5)" }}
           >
-            Selamat Ulang Tahun!
+            Selamat Ulang Tahun
+          </h1>
+          <h1
+            className="text-4xl md:text-6xl font-bold text-white animate-bounce-in font-script text-center"
+            style={{ textShadow: "3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,105,180,0.5)", animationDelay: "0.2s" }}
+          >
+            Puspett 💕
           </h1>
           <h2
             className="text-2xl md:text-3xl animate-slide-in-name my-5 select-none font-script"
@@ -844,14 +856,14 @@
               }}
               onClick={onCelebrate}
             >
-              <span className="text-3xl animate-arrow-right select-none">👉</span>
+              <span className="text-3xl select-none">🎉</span>
               <span
                 className="text-xl md:text-2xl font-bold text-white animate-pulse-text whitespace-nowrap select-none"
-                style={{ textShadow: "3px 3xl 8px rgba(0,0,0,0.3)" }}
+                style={{ textShadow: "3px 3px 8px rgba(0,0,0,0.3)" }}
               >
-                Coba Pencet Ini
+                Rayakan Sekarang!
               </span>
-              <span className="text-3xl animate-arrow-left select-none">👈</span>
+              <span className="text-3xl select-none">🎊</span>
             </button>
             <button
               className="animate-lanjut-btn flex items-center gap-2 px-7 py-3 rounded-full border-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
@@ -862,7 +874,7 @@
               }}
               onClick={onNext}
             >
-              <span className="text-white text-base font-semibold select-none" style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}>Lanjutkan</span>
+              <span className="text-white text-base font-semibold select-none" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.3)" }}>Lanjutkan</span>
               <span className="text-white text-lg animate-arrow-bounce select-none">→</span>
             </button>
           </div>
@@ -950,7 +962,7 @@
           <div className="text-center mb-1 flex-shrink-0">
             <div className="text-3xl md:text-4xl animate-emoji-float select-none mb-1">🎀🎁💖🎁🎀</div>
             <h2 className="text-xl md:text-2xl font-bold text-white font-script"
-              style={{ textShadow: "2px 2xl 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,105,180,0.4)" }}>
+              style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,105,180,0.4)" }}>
               Doa & Harapan
             </h2>
           </div>
@@ -1135,7 +1147,7 @@
               >
                 <span
                   className="text-white text-lg font-bold select-none"
-                  style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                  style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.3)" }}
                 >
                   Kirim Semua Cinta 💌
                 </span>
@@ -1143,10 +1155,33 @@
             )}
             {/* Pesan untuk restart */}
             {showFinale && (
-              <div className="animate-grand-burst text-center">
-                <p className="text-2xl font-bold text-white font-script animate-heartbeat-glow">
-                  Dari aku, dengan sepenuh hati 💗
+              <div className="animate-grand-burst text-center px-4 py-5 rounded-3xl max-w-sm w-full"
+                style={{
+                  background: "rgba(255,255,255,0.15)",
+                  backdropFilter: "blur(14px)",
+                  border: "1.5px solid rgba(255,255,255,0.4)",
+                  boxShadow: "0 8px 30px rgba(255,20,147,0.25)",
+                }}
+              >
+                <div className="text-4xl mb-3 animate-emoji-float select-none">💌</div>
+                <p className="text-xl font-bold text-white font-script animate-heartbeat-glow mb-2">
+                  Dari aku, dengan sepenuh hati.
                 </p>
+                <p className="text-sm italic mb-4" style={{ color: "rgba(255,240,245,0.8)" }}>
+                  Semoga kamu merasakannya, Puspa.
+                </p>
+                <div style={{
+                  borderTop: "1px solid rgba(255,255,255,0.3)",
+                  paddingTop: "0.75rem",
+                  marginTop: "0.25rem",
+                }}>
+                  <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    dengan cinta
+                  </p>
+                  <p className="text-2xl font-bold text-white font-script animate-heartbeat-glow">
+                    Ade Gunawan 💗
+                  </p>
+                </div>
               </div>
             )}
             {/* Tombol Restart */}
@@ -1163,7 +1198,7 @@
               >
                 <span
                   className="text-white text-base font-semibold select-none"
-                  style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                  style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.3)" }}
                 >
                   🔄 Mulai Lagi
                 </span>
@@ -1191,7 +1226,7 @@
             <>
               <span
                 className="text-white text-base font-semibold select-none"
-                style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.3)" }}
               >
                 Lanjutkan
               </span>
@@ -1202,7 +1237,7 @@
               <span className="text-white text-lg animate-arrow-bounce-left select-none">←</span>
               <span
                 className="text-white text-base font-semibold select-none"
-                style={{ textShadow: "1px 1xl 3px rgba(0,0,0,0.3)" }}
+                style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.3)" }}
               >
                 Kembali
               </span>
@@ -1276,9 +1311,11 @@
         setTimeout(() => setter((prev) => prev.filter((p) => !ids.includes(p.id))), lifetime);
       };
 
-      const spawnConfetti = () => addPieces(makeConfetti, 50, setConfetti, 5000);
-      const spawnSparkles = () => addPieces(makeSparkles, 10, setSparkles, 5000);
-      const spawnHearts = () => addPieces(makeHearts, 8, setHearts, 15000);
+      // Deteksi mobile untuk kurangi partikel agar tidak lag
+      const isMobile = window.innerWidth <= 768;
+      const spawnConfetti = () => addPieces(makeConfetti, isMobile ? 25 : 50, setConfetti, 5000);
+      const spawnSparkles = () => addPieces(makeSparkles, isMobile ? 5 : 10, setSparkles, 5000);
+      const spawnHearts = () => addPieces(makeHearts, isMobile ? 5 : 8, setHearts, 15000);
 
       const handleCelebrate = () => {
         spawnConfetti();
@@ -1287,9 +1324,9 @@
       };
 
       const handleGrandFinale = () => {
-        addPieces(makeConfetti, 120, setConfetti, 6000);
-        addPieces(makeSparkles, 25, setSparkles, 6000);
-        addPieces(makeHearts, 20, setHearts, 18000);
+        addPieces(makeConfetti, isMobile ? 50 : 120, setConfetti, 6000);
+        addPieces(makeSparkles, isMobile ? 12 : 25, setSparkles, 6000);
+        addPieces(makeHearts, isMobile ? 10 : 20, setHearts, 18000);
         if (!musicPlaying && audioRef.current) {
           audioRef.current.play().catch(() => {});
           setMusicPlaying(true);
@@ -1396,11 +1433,11 @@
       useEffect(() => {
         if (screen !== "main") return;
         const t1 = setTimeout(() => { spawnConfetti(); spawnSparkles(); spawnHearts(); }, 500);
-        const t2 = setTimeout(sparkles, 3000);
+        const t2 = setTimeout(spawnSparkles, 3000);
         const iv = setInterval(() => {
           if (Math.random() > 0.5) spawnConfetti();
           if (Math.random() > 0.6) spawnHearts();
-        }, 6000);
+        }, isMobile ? 10000 : 6000);
         return () => { clearTimeout(t1); clearTimeout(t2); clearInterval(iv); };
       }, [screen]);
 
@@ -1460,9 +1497,9 @@
         </div>
       );
     }
-
+	
     // Render App
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
-</html>	
+</html>
